@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body class="index-page">
+ <nav class="navbar">
+  <div class="nav-container">
+    <a href="/" class="nav-brand">🏋️ FitnessApp</a>
+    <div class="nav-links">
+      <% if (currentUser) { %>
+        <a href="/">Strona główna</a>
+        <a href="/workouts/new">Nowy trening</a>
+        <a href="/logout">Wyloguj się</a>
+      <% } else { %>
+        <a href="/login">Zaloguj się</a>
+        <a href="/register">Zarejestruj się</a>
+      <% } %>
+    </div>
+  </div>
+</nav>
+
+  <!-- Sayfa başlığı -->
+  <h1>Treningi fitness</h1>
+  <p style="text-align: center;">Łącznie wykonałeś <strong><%= workoutCount %></strong> treningów.</p>
+
+  <!-- Yeni antrenman butonu -->
+  <div style="text-align: center; margin-bottom: 30px;">
+    <a href="/workouts/new" class="edit-button">+ Dodaj nowy trening</a>
+  </div>
+
+  <% if (workouts.length === 0) { %>
+    <p style="text-align: center;">Nie dodano jeszcze żadnych treningów.</p>
+  <% } else { %>
+    <ul>
+      <% workouts.forEach(workout => { %>
+        <li>
+          <strong><%= workout.title %></strong>
+          <span>Typ: <%= workout.type %></span>
+          <span>Czas trwania: <%= workout.duration %> minut</span>
+          <span>Intensywność: <%= workout.intensity %></span>
+
+          <% if (workout.createdAt) { %>
+            <span style="color: #888;">Data dodania: 
+              <%= new Date(workout.createdAt).toLocaleDateString("pl-PL", { day: 'numeric', month: 'long', year: 'numeric' }) %>
+            </span>
+          <% } %>
+
+          <div class="action-buttons">
+            <a href="/workouts/<%= workout.id %>/edit" class="edit-button">✏️ Edytuj</a>
+
+            <form action="/workouts/<%= workout.id %>?_method=DELETE" method="POST" class="delete-form">
+              <button type="submit" class="delete-button">🗑️ Usuń</button>
+            </form>
+          </div>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <!-- 📊 Haftalık özet tablosu -->
+  <h2 style="margin-top: 40px;">📊 Tygodniowe podsumowanie treningów</h2>
+  <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+    <thead>
+      <tr style="background-color: #ddd;">
+        <th style="padding: 8px; text-align: left;">Data</th>
+        <th style="padding: 8px; text-align: left;">Liczba treningów</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (weeklySummary) { %>
+        <% weeklySummary.forEach(item => { %>
+          <tr>
+            <td style="padding: 8px; border-bottom: 1px solid #ccc;">
+              <%= new Date(item[0]).toLocaleDateString("pl-PL", { weekday: 'long', day: 'numeric', month: 'long' }) %>
+            </td>
+            <td style="padding: 8px; border-bottom: 1px solid #ccc;">
+              <%= item[1] %>
+            </td>
+          </tr>
+        <% }) %>
+      <% } %>
+    </tbody>
+  </table>
+
+  <!-- Çıkış bağlantısı -->
+  <div style="text-align: center; margin-top: 30px;">
+    <a href="/logout">🚪 Wyloguj się</a>
+  </div>
+
+</body>
+</html>

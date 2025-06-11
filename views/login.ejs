@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Zaloguj się</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="login-page">
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="/" class="nav-brand">🏋️ FitnessApp</a>
+    <div class="nav-links">
+      <% if (currentUser) { %>
+        <a href="/">Strona główna</a>
+        <a href="/workouts/new">Nowy trening</a>
+        <a href="/logout">Wyloguj się</a>
+      <% } else { %>
+        <a href="/login">Zaloguj się</a>
+        <a href="/register">Zarejestruj się</a>
+      <% } %>
+    </div>
+  </div>
+</nav>
+
+  <h1>🚀 Zaloguj się</h1>
+  <p style="text-align: center;">Zaloguj się na swoje konto</p>
+
+  <form action="/login" method="POST">
+    <label for="username">Nazwa użytkownika</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Hasło</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="submit">Zaloguj się</button>
+  </form>
+
+  <div style="text-align: center; margin-top: 20px;">
+    <a href="/register">👉 Nie masz konta? Zarejestruj się</a>
+  </div>
+
+</body>
+</html>

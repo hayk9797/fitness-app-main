@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="new-page">
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="nav-brand">🏋️ FitnessApp</a>
+      <div class="nav-links">
+        <% if (currentUser) { %>
+          <a href="/">Strona główna</a>
+          <a href="/workouts/new">Nowy trening</a>
+          <a href="/logout">Wyloguj się</a>
+        <% } else { %>
+          <a href="/login">Zaloguj się</a>
+          <a href="/register">Zarejestruj się</a>
+        <% } %>
+      </div>
+    </div>
+  </nav>
+
+  <h1>Dodaj nowy trening</h1>
+
+  <form action="/workouts" method="POST">
+    <label>Tytuł:</label>
+    <input type="text" name="title" required>
+
+    <label>Typ:</label>
+    <input type="text" name="type" required>
+
+    <label>Czas trwania (minuty):</label>
+    <input type="number" name="duration" required>
+
+    <label>Intensywność:</label>
+    <select name="intensity" required>
+      <option value="Düşük">Niska</option>
+      <option value="Orta">Średnia</option>
+      <option value="Yüksek">Wysoka</option>
+    </select>
+
+    <button type="submit">Zapisz</button>
+  </form>
+
+  <a href="/">Powrót do strony głównej</a>
+</body>
+</html>
